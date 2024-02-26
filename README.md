@@ -3,7 +3,20 @@
 
 # BoAT3 Anchor SDK Guide
 
-This guide is for developers of IoT + blockchain projects using BoAT3 Anchor SDK to attest and send data to blockchain via BoAT3 Connector.
+This guide is for developers of IoT + blockchain projects to attest and send data to blockchain via BoAT3 Connector. For simple, we use BoAT3 Application to replace "IoT + blockchain project" in the following chapters.
+
+
+# Overview of BoAT3 Application
+
+The simple architecture of BoAT3 Application looks like the following:
+
+![BoAT-Architecture](boat3.png "Architecture of BoAT3 Application")
+
+There are 3 key parts:
+ - BoAT3 Application, collects business data, packs business data as BoAT3 messages and sends the packed message to the BoAT3 connector. A BoAT3 application can run on a single IoT device or a cloud server as will of developer.
+ - BoAT3 Oracle, manages and hosts BoAT3 connectors. Every BoAT3 application has at least one BoAT3 connector. It is the bridge to the bockchain/contract.
+ - Blockchain, provides notary contracts or services.
+
 
 
 # Request Authorization from BoAT3
