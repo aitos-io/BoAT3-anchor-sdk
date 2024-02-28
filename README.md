@@ -67,7 +67,7 @@ cd BoAT3-anchor-sdk/
 Every call to BoAT3 Anchor SDK needs authorization. The following sample code stores the authorization directly. The preferred way is using environment variables to manage the BoAT3 authorization.
 
 ```
-const boat3 = require('BoAT3-anchor-sdk');
+const boat3 = require('boat3-anchor-sdk');
 
 //set the BoAT3 authorzation in this constant
 const BOAT3_AUTHORIZATION = "eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ9fX0=";
@@ -126,7 +126,7 @@ touch app.js
 Copy and paste the following code in `app.js`:
 
 ```
-const boat3 = require('BoAT3-anchor-sdk');
+const boat3 = require('boat3-anchor-sdk');
 
 //put the authorzation issued by BoAT3 in here
 const BOAT3_AUTHORIZATION = "___replace_later___";
