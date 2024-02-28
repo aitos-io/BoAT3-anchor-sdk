@@ -13,7 +13,7 @@ The simple architecture of BoAT3 Application looks like the following:
 ![BoAT-Architecture](boat3.png "Architecture of BoAT3 Application")
 
 There are 3 key parts:
- - BoAT3 Application, collects business data, packs business data as BoAT3 messages and sends the packed message to the BoAT3 connector. A BoAT3 application can run on a single IoT device or a cloud server as will of developer.
+ - BoAT3 Application, collects service data, packs service data as BoAT3 messages and sends the packed message to the BoAT3 connector. A BoAT3 application can run on a single IoT device or a cloud server as will of developer.
  - BoAT3 Oracle, manages and hosts BoAT3 connectors. Every BoAT3 application has at least one BoAT3 connector. It is the bridge to the bockchain/contract.
  - Blockchain, provides notary contracts or services.
 
@@ -32,9 +32,9 @@ eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ9fX0=
 The lifetime of the authorization is limited. If you encounter the error message Authorization is expired, it indicates that the authorization has expired. In such cases, you can reach BoAT3 to request a new authorization.
 
 
-# Preparing Business Data
+# Preparing Service Data
 
-You can prepare business data in any format and send it to BoAT3 Connector, but JSON format is preferred. Simple business data for the Weather Station looks like:
+You can prepare service data in any format and send it to BoAT3 Connector, but JSON format is preferred. Simple service data for the Weather Station looks like:
 
 ```
 {
@@ -79,7 +79,7 @@ const BOAT3_AUTHORIZATION = "eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ
 There are a lot of cryptographic processes for preparing BoAT3 messages, but it is very simple via BoAT3 Anchor SDK:
 
 ```
-var message = await boat3.pack(businessData, BOAT3_AUTHORIZATION);
+var message = await boat3.pack(serviceData, BOAT3_AUTHORIZATION);
 console.log(message);
 ```
 
@@ -97,7 +97,7 @@ console.log(result);
 
 # Full BoAT3 Application Build
 
-The remaining chapters describe a full BoAT3 application example. Developers can send any business data to the BoAT3 connector. The following takes Weather Station data as an example.
+The remaining chapters describe a full BoAT3 application example. Developers can send any service data to the BoAT3 connector. The following takes Weather Station data as an example.
 
 # Create and Initialize Your Application
 
@@ -132,7 +132,7 @@ const boat3 = require('boat3-anchor-sdk');
 const BOAT3_AUTHORIZATION = "___replace_later___";
 
 (async function() {
-    var businessData = {
+    var serviceData = {
     uid: "0xaa3d6c4685940048fa6ece0ac9d3bc44914c2153d608b4052497129ac45f9c5b",
     temperature: 14,
     humidity: 70,
@@ -142,7 +142,7 @@ const BOAT3_AUTHORIZATION = "___replace_later___";
     timestamp: 1708853672789
   };
 
-  var message = await boat3.pack(businessData, BOAT3_AUTHORIZATION);
+  var message = await boat3.pack(serviceData, BOAT3_AUTHORIZATION);
   console.log(message);
 
   var result = await boat3.send(message, BOAT3_AUTHORIZATION);

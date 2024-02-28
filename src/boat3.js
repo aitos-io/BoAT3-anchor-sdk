@@ -90,8 +90,8 @@ async function packMessage(data, proof, device) {
 }
 
 
-async function pack(businessData, authorization) {
-	var data = businessData;
+async function pack(serviceData, authorization) {
+	var data = serviceData;
 
 	var config = parseAuthorization(authorization);
 	var connectorId = config.connector.connectorId;
