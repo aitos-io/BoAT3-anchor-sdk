@@ -114,9 +114,14 @@ async function pack(businessData, authorization) {
 
 //send the message to connector on BoAT3 oracle
 async function send(message, authorization) {
-	var config = parseAuthorization(authorization);
-  const result = await JsonRpcClient.sendMessage(message, config);
-  return result;
+  try {
+    var config = parseAuthorization(authorization);
+    await JsonRpcClient.sendMessage(message, config);
+    return true;
+  
+  } catch(e) {
+    throw e;
+  }
 }
 
 

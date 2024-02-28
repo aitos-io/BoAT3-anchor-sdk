@@ -20,23 +20,21 @@ There are 3 key parts:
 
 # Execution Environment
 
-You need to install Node.JS execution environment. Check your Node.JS version to ensure that you have the latest version of Node.JS installed before proceeding. You can download the latest version of Node.JS at https://nodejs.org/en/download
+You need to install `Node.JS` execution environment. Check your `Node.JS` version to ensure that you have the latest version of `Node.JS` installed before proceeding. You can download the latest version of `Node.JS` at https://nodejs.org/en/download
 
 
 # Request Authorization from BoAT3
 
-Before sending data to BoAT3 Connector, you must an authorization issued by BoAT3. The authorization is a base64 encoded string look like:
+Before sending data to BoAT3 Connector, you must an authorization issued by BoAT3. The authorization is a base64 encoded string that looks like:
 
-```
 eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ9fX0=
-```
 
-The lifetime of the authorization is limited, if you encounter the error message `Authorization is expired`, it indicates that the authorization has expired. In such cases, you can reach to BoAT3 to request a new authorzation.
+The lifetime of the authorization is limited. If you encounter the error message Authorization is expired, it indicates that the authorization has expired. In such cases, you can reach BoAT3 to request a new authorization.
 
 
-# Prepare Business Data
+# Preparing Business Data
 
-Developer can prepare business data in any format and sending it to BoAT3 Connector, but JSON format is prefered. A simple business data for weather station look like:
+You can prepare business data in any format and send it to BoAT3 Connector, but JSON format is preferred. Simple business data for the Weather Station looks like:
 
 ```
 {
@@ -52,7 +50,7 @@ Developer can prepare business data in any format and sending it to BoAT3 Connec
 
 # Install BoAT3 Anchor SDK
 
-Currently, The BoAT3 Anchor SDK has yet to be published in `npm`, so you will need to install the BoAT3 Anchor SDK in your BoAT3 application directory as shown below:
+Currently, The BoAT3 Anchor SDK has yet to be published in `npm`, so you will need to install the BoAT3 Anchor SDK in a local way:
 
 ```
 # Clone BoAT3-anchor-sdk repository
@@ -61,21 +59,12 @@ git clone https://github.com/aitos-io/BoAT3-anchor-sdk.git
 cd BoAT3-anchor-sdk/
 
 # Install dependencies
-npm install
-
-# Build BoAT3-anchor-sdk
-npm run build
-
-cd /Path/To/Your-BoAT3-Application
-
-# Install BoAT3-anchor-sdk
-npm install /Path/To/BoAT3-anchor-sdk
-
+`npm` install
 ```
 
 # Import BoAT3 Anchor SDK and Config Authorization
 
-Every call to BoAT3 Anchor SDK need the authorization, the following sample code store the authorization directly, the prefered way is using environment variale to manage the BoAT3 authorization.
+Every call to BoAT3 Anchor SDK needs authorization. The following sample code stores the authorization directly. The preferred way is using environment variables to manage the BoAT3 authorization.
 
 ```
 const boat3 = require('BoAT3-anchor-sdk');
@@ -87,45 +76,89 @@ const BOAT3_AUTHORIZATION = "eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ
 
 # Prepare BoAT3 Message
 
-There are a lot of crypographic process in preparing BoAT3 message, but it is very simple via BoAT3 Anchor SDK, the following is the sample code:
+There are a lot of cryptographic processes for preparing BoAT3 messages, but it is very simple via BoAT3 Anchor SDK:
 
 ```
 var message = await boat3.pack(businessData, BOAT3_AUTHORIZATION);
 console.log(message);
 ```
+
+BoAT3 Anchor SDK will take care of the message pack, digest calculate and sign things.
 
 
 # Send Message to BoAT3 Connector
 
-Send BoAT3 message to BoAT3 Connector, every BoAT3 application must connect to specific BoAT3 Connector. The base64 encoded authorization includes the configuration of target connector, the following is the sample code:
+Send BoAT3 message to BoAT3 Connector. Every BoAT3 application must connect to a specific BoAT3 Connector. The base64 encoded authorization includes the configuration of target connector. The following is the sample code:
 
 ```
 var result = await boat3.send(message, BOAT3_AUTHORIZATION);
 console.log(result);
 ```
 
-# Full Application Source Code Example
+# Full BoAT3 Application Build
+
+The remaining chapters describe a full BoAT3 application example. Developers can send any business data to the BoAT3 connector. The following takes Weather Station data as an example.
+
+# Create and Initialize Your Application
+
+Firstly, create and initialize your application:
+
+```
+# Create your BoAT3 application
+mkdir /Path/To/Your-BoAT3-Application
+cd /Path/To/Your-BoAT3-Application
+
+# Initialize `npm` package
+`npm` init
+
+# Install BoAT3-anchor-sdk
+`npm` install /Path/To/BoAT3-anchor-sdk
+```
+
+# Source Code of Your BoAT3 Application
+
+Secondly, create an entrypoint of your application:
+
+```
+touch app.js
+```
+
+Copy and paste the following code in `app.js`:
 
 ```
 const boat3 = require('BoAT3-anchor-sdk');
 
-//put the BoAT3 authorzation issued by BoAT3 in here
+//put the authorzation issued by BoAT3 in here
+const BOAT3_AUTHORIZATION = "___replace_later___";
+
+(async function() {
+    var businessData = {
+    uid: "0xaa3d6c4685940048fa6ece0ac9d3bc44914c2153d608b4052497129ac45f9c5b",
+    temperature: 14,
+    humidity: 70,
+    cloud: 'sunny',
+    latitude: 37.9,
+    longitude: -120.4,
+    timestamp: 1708853672789
+  };
+
+  var message = await boat3.pack(businessData, BOAT3_AUTHORIZATION);
+  console.log(message);
+
+  var result = await boat3.send(message, BOAT3_AUTHORIZATION);
+  console.log(result);
+        
+})();
+```
+
+Replace the value of constant variable `BOAT3_AUTHORIZATION` with the BoAT3 authorization issued by BoAT3:
+
+```
 const BOAT3_AUTHORIZATION = "eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ9fX0=";
+```
 
-var businessData = {
-  uid: "0xaa3d6c4685940048fa6ece0ac9d3bc44914c2153d608b4052497129ac45f9c5b",
-  temperature: 14,
-  humidity: 70,
-  cloud: 'sunny',
-  latitude: 37.9,
-  longitude: -120.4,
-  timestamp: 1708853672789
-};
+# Start Your BoAT3 Application
 
-var message = await boat3.pack(businessData, BOAT3_AUTHORIZATION);
-console.log(message);
-
-var result = await boat3.send(message, BOAT3_AUTHORIZATION);
-console.log(result);
-
+```
+node app.js
 ```
