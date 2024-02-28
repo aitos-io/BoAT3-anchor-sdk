@@ -50,7 +50,7 @@ You can prepare service data in any format and send it to BoAT3 Connector, but J
 
 # Install BoAT3 Anchor SDK
 
-Currently, The BoAT3 Anchor SDK has yet to be published in `npm`, so you will need to install the BoAT3 Anchor SDK in a local way:
+Currently, The BoAT3 Anchor SDK has not yet to be published in `npm`, so you will need to install the BoAT3 Anchor SDK in a local way:
 
 ```
 # Clone BoAT3-anchor-sdk repository
