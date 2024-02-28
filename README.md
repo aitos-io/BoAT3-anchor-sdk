@@ -18,6 +18,10 @@ There are 3 key parts:
  - Blockchain, provides notary contracts or services.
 
 
+# Execution Environment
+
+You need to install Node.JS execution environment. Check your Node.JS version to ensure that you have the latest version of Node.JS installed before proceeding. You can download the latest version of Node.JS at https://nodejs.org/en/download
+
 
 # Request Authorization from BoAT3
 
@@ -98,4 +102,30 @@ Send BoAT3 message to BoAT3 Connector, every BoAT3 application must connect to s
 ```
 var result = await boat3.send(message, BOAT3_AUTHORIZATION);
 console.log(result);
+```
+
+# Full Application Source Code Example
+
+```
+const boat3 = require('BoAT3-anchor-sdk');
+
+//put the BoAT3 authorzation issued by BoAT3 in here
+const BOAT3_AUTHORIZATION = "eyJhY2NvdW50Ijp7ImF.....OWRiNzEzYTc4YmMxN2QwMzhiZSJ9fX0=";
+
+var businessData = {
+  uid: "0xaa3d6c4685940048fa6ece0ac9d3bc44914c2153d608b4052497129ac45f9c5b",
+  temperature: 14,
+  humidity: 70,
+  cloud: 'sunny',
+  latitude: 37.9,
+  longitude: -120.4,
+  timestamp: 1708853672789
+};
+
+var message = await boat3.pack(businessData, BOAT3_AUTHORIZATION);
+console.log(message);
+
+var result = await boat3.send(message, BOAT3_AUTHORIZATION);
+console.log(result);
+
 ```

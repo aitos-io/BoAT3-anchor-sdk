@@ -7,7 +7,7 @@ const JsonRpcClient = require('./rpc.client');
 const DEFAULT_TEMPLATE = "default";
 
 function parseAuthorization(authorization) {
-	var json = Ethers.decodeBase64(authorization);
+	var json = Ethers.toUtf8String(Ethers.decodeBase64(authorization));
 	var config = JSON.parse(json);
 	return config;
 }
