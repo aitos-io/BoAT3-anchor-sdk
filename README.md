@@ -59,7 +59,7 @@ git clone https://github.com/aitos-io/BoAT3-anchor-sdk.git
 cd BoAT3-anchor-sdk/
 
 # Install dependencies
-`npm` install
+npm install
 ```
 
 # Import BoAT3 Anchor SDK and Config Authorization
@@ -108,11 +108,11 @@ Firstly, create and initialize your application:
 mkdir /Path/To/Your-BoAT3-Application
 cd /Path/To/Your-BoAT3-Application
 
-# Initialize `npm` package
-`npm` init
+# Initialize npm package
+npm init
 
 # Install BoAT3-anchor-sdk
-`npm` install /Path/To/BoAT3-anchor-sdk
+npm install /Path/To/BoAT3-anchor-sdk
 ```
 
 # Source Code of Your BoAT3 Application
